@@ -34,8 +34,8 @@ class Person {
 
     }
 }
-// let randomPeople = Person.generateRandomPeople(5);
-// console.log(randomPeople);
+let randomPeople = Person.generateRandomPeople(5);
+console.log(randomPeople);
 
 
 class Student extends Person {
@@ -60,38 +60,40 @@ class Student extends Person {
         return `${super.getInfo()} Their average grade is ${this.getAverageGrades()}`
     }
     static generateRandomStudents(numberOfPeople) {
-        let randomStudent = super.generateRandomPeople(numberOfPeople)
-        for (let i = 0; i < randomStudent.length; i++) {
-            let student = randomStudent[i];
+        let randomPeople = super.generateRandomPeople(numberOfPeople)
+        let randomStudents = [];
+        for (let i = 0; i < randomPeople.length; i++) {
+            let student = new Student(randomPeople[i].firstName, randomPeople[i].lastName, randomPeople[i].age, randomPeople[i].id)
             student.grades = []
             for (let i = 0; i < 5; i++) {
-                let grade = getRandomNumber(0,100);
+                let grade = getRandomNumber(0, 100);
                 student.grades.push(grade);
             }
+            randomStudents.push(student);
         }
-        return randomStudent;
+        return randomStudents;
     }
 }
-// randomStudent = Student.generateRandomStudents(5);
-// console.log(randomStudent);
+let randomStudent = Student.generateRandomStudents(5);
+console.log(randomStudent);
+console.log(randomStudent[0].getAverageGrades());
 
 class Teacher extends Person {
     constructor(firstName, lastName, age, id, students) {
         super(firstName, lastName, age, id);
         this.students = students;
     }
-    static generateRandomTeacher(numberOfPeople) {
-        let randomTeacher = super.generateRandomPeople(numberOfPeople)
-        for (let i = 0; i < randomTeacher.length; i++) {
-            let teacher = randomTeacher[i];
-            teacher.students = []
-            for (let i = 0; i < 3; i++) {
-                let student = super.generateRandomStudents();
-                teacher.students.push(student);
-            }
+    static generateRandomTeachers(numberOfPeople) {
+        let randomPeople = []
+        for (let i = 0; i < numberOfPeople.length; i++) {
+            let students = new Student.generateRandomStudents(10);
+            let randomPerson = new Teacher(getRandomGivenName(), getRandomFamilyName(), GetRandomNumber(21, 60), i, students);
+            randomPeople.push(student);
         }
-        return randomTeacher;
+        return randomPeople;
     }
+
+
     getAverageGrades() {
         let total = 0
         for (let i = 0; i < students.length; i++) {
@@ -111,6 +113,7 @@ class Teacher extends Person {
 
     }
 }
+
 
 randomTeacher = Teacher.generateRandomTeacher(5);
 console.log(randomTeacher);
